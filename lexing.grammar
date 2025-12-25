@@ -1,0 +1,29 @@
+Package lexing;  // A Java package is produced for the
+// generated scanner
+
+Helpers
+  num = ['0'..'9']+;     // A num is 1 or more decimal digits
+  letter = ['a'..'z'] | ['A'..'Z'];
+  // A letter is a single upper or
+  // lowercase character.
+
+Tokens
+  number = num;          // A number token is a whole number
+  ident = letter (letter | num)*;
+  // An ident token is a letter followed by
+  // 0 or more letters and numbers.
+  arith_op = '+' | '-' | '*' | '/';
+  // Arithmetic operators
+  rel_op = '<' | '>' | '==' | '<=' | '>=' | '!=';
+  // Relational operators
+  paren = '(' | ')';                     // Parentheses
+  blank = (' ' | 9 | 10 | 13)+;      // White space
+  unknown = [0..0xffff];
+  // Any single character which is not part
+  // of one of the above tokens.
+
+Ignored Tokens
+  blank;
+
+Productions
+  start = unknown*;
