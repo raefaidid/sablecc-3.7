@@ -1,0 +1,33 @@
+ban HangulCompiler
+{
+    gonggongde jeongtaeui mubanseong hansu (mujeongsu[] byeonsu)
+    {
+        budongsu X1, Y1;
+        jeongsu I, J, K;
+
+        X1 = 0;
+        Y1 = 10;
+        K  = 10;
+        J  = -10;
+
+        wihan (I = 1; I + 10 <= K; I = I - 1)
+        {
+            dangsi (K + I < 20)
+            {
+                J = I;
+
+                haeseong
+                {
+                    yega (X1 > Y1)
+                        J = J - 2;
+                    geureohji
+                        J = J / 4;
+
+                    X1 = X1 * 2.0;
+                } dangsi (J >= 20);
+
+                K = K + 3;
+            }
+        }
+    }
+}

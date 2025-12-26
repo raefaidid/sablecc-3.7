@@ -1,0 +1,51 @@
+Package decaf;
+
+Helpers // Examples
+  letter = ['a'..'z'] | ['A'..'Z'] ;             // w
+  digit = ['0'..'9'] ;                           // 3
+  digits = digit+ ; 				// 2040099
+  exp = ['e' + 'E'] ['+' + '-']? digits;         // E-34
+  newline = [10 + 13] ; 				// '\n'
+  non_star = [[0..0xffff] - '*'] ;               // /
+  non_slash = [[0..0xffff] - '/'];               // *
+  non_star_slash = [[0..0xffff] - ['*' + '/']];  // $
+
+Tokens
+  comment1 = '//' [[0..0xffff]-newline]* newline ;
+  comment2 = '/*' non_star* '*'  (non_star_slash non_star* '*'+)* '/' ;
+  space = ' ' | 9 | newline ; // 9 = tab
+  
+  // Spanish keywords (reserved words)
+  clas = 'clase' ; 				// class
+  public = 'publico' ;                  // public
+  static = 'estatico' ;                 // static
+  void = 'vacio' ;                      // void
+  main = 'principal' ;                  // main
+  string = 'Cadena' ;                   // String
+  int = 'entero' ;                      // int
+  float = 'flotante' ;                  // float
+  for = 'para' ;                        // for
+  while = 'mientras' ;                  // while
+  do = 'hacer' ;                        // do (for do-while)
+  if = 'si' ;                           // if
+  else = 'sino' ;                       // else
+  
+  // Operators and delimiters (same as original)
+  assign = '=' ;
+  compare = '==' | '<' | '>' | '<=' | '>=' | '!=' ;
+  plus = '+' ;
+  minus = '-' ;
+  mult = '*' ;
+  div = '/' ;
+  l_par = '(' ;
+  r_par = ')' ;
+  l_brace = '{' ;
+  r_brace = '}' ;
+  l_bracket = '[' ;
+  r_bracket = ']' ;
+  comma = ',' ;
+  semi = ';' ;
+  
+  identifier = letter (letter | digit | '_')* ;
+  number = (digits '.'? digits? | '.'digits) exp? ;
+  misc = [0..0xffff] ;

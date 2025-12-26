@@ -1,0 +1,49 @@
+// decaf.grammar
+// SableCC grammar for decaf, a subset of Java.
+// March 2003, sdb
+
+Package decaf;
+
+Helpers // Examples
+  letter = ['a'..'z'] | ['A'..'Z'] ;             // w
+  digit = ['0'..'9'] ;                           // 3
+  digits = digit+ ; 				// 2040099
+  exp = ['e' + 'E'] ['+' + '-']? digits;         // E-34
+  newline = [10 + 13] ; 				// '\n'
+  non_star = [[0..0xffff] - '*'] ;               // /
+  non_slash = [[0..0xffff] - '/'];               // *
+  non_star_slash = [[0..0xffff] - ['*' + '/']];  // $
+Tokens
+  comment1 = '//' [[0..0xffff]-newline]* newline ;
+  comment2 = '/*' non_star* '*'  (non_star_slash non_star* '*'+)* '/' ;
+  space = ' ' | 9 | newline ; // 9 = tab
+  clas = 'class' ; 				// key words (reserved)
+  public = 'public' ;
+  static = 'static' ;
+  void = 'void' ;
+  main = 'main' ;
+  string = 'String' ;
+  int = 'int' ;
+  float = 'float' ;
+  for = 'for' ;
+  while = 'while' ;
+  if = 'if' ;
+  else = 'else' ;  
+  assign = '=' ;
+  compare = '==' | '<' | '>' | '<=' | '>=' | '!=' ;
+  plus = '+' ;
+  minus = '-' ;
+  mult = '*' ;
+  div = '/' ;
+  l_par = '(' ;
+  r_par = ')' ;
+  l_brace = '{' ;
+  r_brace = '}' ;
+  l_bracket = '[' ;
+  r_bracket = ']' ;
+  comma = ',' ;
+  semi = ';' ;
+  identifier = letter (letter | digit | '_')* ;
+  number = (digits '.'? digits? | '.'digits) exp? ;
+  misc = [0..0xffff] ;
+

@@ -1,0 +1,20 @@
+// lexing.grammar
+// Sample SableCC for lexical analysis
+// To be used with lexing/Lexing.java
+// March 2003,  sdb
+
+Package lexing ;
+
+Helpers
+ num = ['0'..'9']+;
+ letter = ['a'..'z'] | ['A'..'Z']  ;
+
+Tokens
+ number = num;
+ ident = letter (letter | num)* ;
+ arith_op = [ ['+' + '-' ] + ['*' + '/' ] ] ;
+ rel_op = ['<' + '>'] | '==' | '<=' | '>=' | '!=' ;
+ paren = ['(' + ')'];
+ blank = (' ' | '\t' | 10 | '\n')+ ;
+ unknown = [0..0xffff] ;
+ 
