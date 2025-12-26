@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=MutableInt
+comment1.params=i
+comment1.target=MutableInt(int)
+comment2.params=
+comment2.target=MutableInt()
+comment3.params=
+comment3.target=int\ get()
+comment4.params=i
+comment4.target=void\ set(int)
+comment5.params=m
+comment5.target=void\ set(MutableInt)
+comment6.params=
+comment6.target=java.lang.String\ toString()
+numComments=7
