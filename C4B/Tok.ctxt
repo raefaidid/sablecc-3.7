@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=lxr
+comment0.target=Tok(decaf.lexer.Lexer)
+comment1.params=
+comment1.target=void\ getToken()
+comment2.params=
+comment2.target=void\ peek()
+comment3.params=
+comment3.target=int\ get_class()
+comment4.params=
+comment4.target=java.lang.String\ getValue()
+comment5.params=
+comment5.target=int\ getLine()
+comment6.params=
+comment6.target=int\ getPos()
+numComments=7
