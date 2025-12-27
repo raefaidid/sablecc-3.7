@@ -1,0 +1,176 @@
+Package japanese;
+
+Helpers
+  letter = ['a'..'z'] | ['A'..'Z'] | [0x3040..0x309F] | [0x30A0..0x30FF] | [0x4E00..0x9FFF];
+  digit = ['0'..'9'] ;
+  digits = digit+ ;
+  exp = ['e' + 'E'] ['+' + '-']? digits;
+  newline = [10 + 13] ;
+  non_star = [[0..0xffff] - '*'] ;
+  non_slash = [[0..0xffff] - '/'];
+  non_star_slash = [[0..0xffff] - ['*' + '/']];
+
+Tokens
+  comment1 = '//' [[0..0xffff]-newline]* newline ;
+  comment2 = '/*' non_star* '*'  (non_star_slash non_star* '*'+)* '/' ;
+  space = ' ' | 9 | newline ;
+  
+  // Japanese keywords (日本語キーワード)
+  clas   = 'クラス';          // class (kurasu)
+  public = '公開';            // public (koukai)
+  static = '静的';            // static (seiteki)
+  void   = '空';              // void (kara)
+  main   = '主要';            // main (shuyou)
+  string = '文字列';          // String (mojiretu)
+  int    = '整数';            // int (seisuu)
+  float  = '小数';            // float (shousuu)
+  boolean = '真偽';           // boolean (shingi)
+  for    = '繰返';            // for (kurikaeshi)
+  while  = '間';              // while (aida)
+  if     = 'もし';            // if (moshi)
+  else   = 'そうでなければ';  // else (soudenakere)
+  do     = '実行';            // do (jikkou)
+  return = '戻る';            // return (modoru)
+  true_lit = '真';            // true (shin)
+  false_lit = '偽';           // false (gi)
+  
+  // Operators (演算子)
+  assign  = '=' ;
+  eq      = '==' ;
+  neq     = '!=' ;
+  lt      = '<' ;
+  gt      = '>' ;
+  lteq    = '<=' ;
+  gteq    = '>=' ;
+  plus    = '+' ;
+  minus   = '-' ;
+  mult    = '*' ;
+  div     = '/' ;
+  mod     = '%' ;
+  and     = '&&' ;
+  or      = '||' ;
+  not     = '!' ;
+  
+  // Delimiters (区切り文字)
+  l_par   = '(' ;
+  r_par   = ')' ;
+  l_brace = '{' ;
+  r_brace = '}' ;
+  l_bracket = '[' ;
+  r_bracket = ']' ;
+  comma   = ',' ;
+  semi    = ';' ;
+  
+  // Identifiers and literals
+  identifier = letter (letter | digit | '_')* ;
+  int_literal = digits ;
+  float_literal = (digits '.' digits? | '.' digits) exp? ;
+  string_literal = '"' [[0..0xffff] - ['"' + newline]]* '"' ;
+  
+  misc   = [0..0xffff] ;
+
+Ignored Tokens
+  comment1, comment2, space ;
+
+Productions
+  program = 
+    class_decl+ ;
+    
+  class_decl = 
+    clas identifier l_brace field_decl* method_decl* r_brace ;
+    
+  field_decl = 
+    type var_list semi ;
+    
+  method_decl = 
+    [mods]:modifier* type identifier l_par param_list? r_par block ;
+    
+  modifier = 
+    {pub} public |
+    {stat} static ;
+    
+  type = 
+    {int} int |
+    {float} float |
+    {boolean} boolean |
+    {string} string |
+    {void} void |
+    {array} type l_bracket r_bracket ;
+    
+  param_list = 
+    param param_tail* ;
+    
+  param_tail = 
+    comma param ;
+    
+  param = 
+    type identifier ;
+    
+  var_list = 
+    identifier var_tail* ;
+    
+  var_tail = 
+    comma identifier ;
+    
+  block = 
+    l_brace var_decl* statement* r_brace ;
+    
+  var_decl = 
+    type var_list semi ;
+    
+  statement = 
+    {assign} identifier assign expr semi |
+    {if} if l_par expr r_par statement else_part? |
+    {while} while l_par expr r_par statement |
+    {for} for l_par statement_expr? semi expr? semi statement_expr? r_par statement |
+    {do_while} do statement while l_par expr r_par semi |
+    {return} return expr? semi |
+    {block} block ;
+    
+  else_part = 
+    else statement ;
+    
+  statement_expr = 
+    identifier assign expr ;
+    
+  expr = 
+    {or} expr or and_expr |
+    {simple} and_expr ;
+    
+  and_expr = 
+    {and} and_expr and rel_expr |
+    {simple} rel_expr ;
+    
+  rel_expr = 
+    {eq} add_expr eq add_expr |
+    {neq} add_expr neq add_expr |
+    {lt} add_expr lt add_expr |
+    {gt} add_expr gt add_expr |
+    {lteq} add_expr lteq add_expr |
+    {gteq} add_expr gteq add_expr |
+    {simple} add_expr ;
+    
+  add_expr = 
+    {plus} add_expr plus mult_expr |
+    {minus} add_expr minus mult_expr |
+    {simple} mult_expr ;
+    
+  mult_expr = 
+    {mult} mult_expr mult unary_expr |
+    {div} mult_expr div unary_expr |
+    {mod} mult_expr mod unary_expr |
+    {simple} unary_expr ;
+    
+  unary_expr = 
+    {minus} minus primary |
+    {not} not primary |
+    {simple} primary ;
+    
+  primary = 
+    {int} int_literal |
+    {float} float_literal |
+    {string} string_literal |
+    {true} true_lit |
+    {false} false_lit |
+    {var} identifier |
+    {paren} l_par expr r_par ;
