@@ -1,0 +1,42 @@
+# Group Project CSC569
+
+## Requirements
+
+1. Create a compiler/programming language similar to the Decaf compiler/programming language but change as many as possible the terminal symbols.
+2. Name your compiler, and the compiler's name becomes your group name.
+3. 3/4 members per group.
+4. Add a new control statement to your compiler:
+   ```
+   DoWhileStmt → do Stmt while (BoolExpr)
+   ```
+
+## Sample Program
+
+Recreate the following Decaf program using your compiler/programming language and run the program.
+
+```java
+class NewComp {
+    public static void main(String[] args) {
+        float X1, Y1;
+        int I, J, K;
+        X1 = 0;
+        Y1 = 10;
+        K = 10;
+        J = -10;
+
+        for (I = 1; I + 10 <= K; I = I - 1) {
+            while (K + I < 20) {
+                J = I;
+                do {
+                    if (X1 > Y1)
+                        J = J - 2;
+                    else
+                        J = J / 4;
+                    X1 = X1 * 2.0;
+                } while (J >= 20);
+                K = K + 3;
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,49 @@
+Package decaf;
+
+Helpers
+  letter = ['a'..'z'] | ['A'..'Z'] ;
+  digit = ['0'..'9'] ;
+  digits = digit+ ;
+  exp = ['e' + 'E'] ['+' + '-']? digits;
+  newline = [10 + 13] ;
+  non_star = [[0..0xffff] - '*'] ;
+  non_slash = [[0..0xffff] - '/'];
+  non_star_slash = [[0..0xffff] - ['*' + '/']];
+
+Tokens
+  comment1 = '//' [[0..0xffff]-newline]* newline ;
+  comment2 = '/*' non_star* '*'  (non_star_slash non_star* '*'+)* '/' ;
+  space = ' ' | 9 | newline ;
+
+  // Malay keywords
+  clas   = 'kelas';        // class
+  public = 'awam';         // public
+  static = 'statik';       // static
+  void   = 'kosong';       // void
+  main   = 'utama';        // main
+  string = 'rentetan';     // String
+  int    = 'integer';      // int
+  float  = 'perpuluhan';   // float
+  for    = 'untuk';        // for
+  while  = 'selagi';       // while
+  if     = 'jika';         // if
+  else   = 'lain';         // else
+  do     = 'buat';         // do
+
+  assign  = '=' ;
+  compare = '==' | '<' | '>' | '<=' | '>=' | '!=' ;
+  plus    = '+' ;
+  minus   = '-' ;
+  mult    = '*' ;
+  div     = '/' ;
+  l_par   = '(' ;
+  r_par   = ')' ;
+  l_brace = '{' ;
+  r_brace = '}' ;
+  l_bracket = '[' ;
+  r_bracket = ']' ;
+  comma   = ',' ;
+  semi    = ';' ;
+  identifier = letter (letter | digit | '_')* ;
+  number = (digits '.'? digits? | '.'digits) exp? ;
+  misc   = [0..0xffff] ;
